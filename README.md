@@ -1,6 +1,6 @@
 # Econometrics
 
-This repo is my collection econometric theory and example. 
+This repo is my collection of scrips of econometical examples (and illustration of theory)
 
 ## The folder Seminar
 The folder named Semiar are exercises and example from the course ECON 4137- Applied Micro Econometrics, at the University of Oslo (spring 2020).
