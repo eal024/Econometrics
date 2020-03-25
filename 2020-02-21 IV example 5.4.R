@@ -52,7 +52,7 @@ schooling_raw %>%
   mutate( age_2 = age76^2) %>% 
   select( ed76, age_2 ,age76, black, smsa76, south76 ,momed, daded ) %>%  
   lm( ed76 ~ ., data = .) %>% summary()
-  
+
 
 # b) momed and daded - as IV for schooling. age and age2 IV for experience.
 model_iv <- 
@@ -104,7 +104,7 @@ p_val
 
 # d) 
 model_types <- tibble( model_index = c(1:3)) 
-  
+
 model_ols <- function(x) {lm( x$lwage76 ~ x$ed76 + x$black + x$exp76 + I(x$exp76^2)  + x$smsa66 + x$south66, data = x) }
 model_iv <- function(x) { AER::ivreg( x$lwage76 ~ x$ed76 + x$exp76 + I(x$exp76^2) + x$smsa76 + x$south76  + x$black | x$momed + x$daded + x$black + x$age76 + I(x$age76^2) +x$smsa76 + x$south76  , data = x)  }
 model_iv_5_4 <- function(x) { AER::ivreg( x$lwage76 ~ x$ed76 + x$exp76 + I(x$exp76^2) + x$smsa76 + x$south76  + x$black | x$nearc4 + x$black + x$age76 + I(x$age76^2) +x$smsa76 + x$south76  , data = x)  }
