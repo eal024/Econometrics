@@ -23,24 +23,50 @@ df %>%
   ggplot( ) +  aes( x = index , y = cumsum) + geom_point()
 
 # b) Chi-distribution
-rchisq(seq(1:100), df = 1, ncp = 0)
+chi <- rchisq(seq(1:100), df = 1, ncp = 0)
 
 hist(rchisq(seq(1:100), df = 1, ncp = 0))
 
+a <- list(tibble( x = chi), tibble( x = chi)) 
+
+c <- a %>% bind_rows() 
+
+
 # Many chi-distriution
-df <- tibble( n = seq(from = 1, to = 10000, length.out = 9))
+df <- tibble( n = c(10,100,1000) )
 
 df_chi <-
   df %>% 
   group_by( n ) %>% 
   nest() %>% 
-  mutate( df = map(n , function(x) {tibble( N = seq(1:n) )} ),
-          df_chi = map(df, function(x) {x %>%  mutate( chi = rchisq(n = N, df = 1, ncp = 0)) }  ))
+  mutate( df = map(n , function(x) {tibble( N = n )} ))
+
+
+df_chi$df[2]
 
 df_chi %>% 
   unnest(df_chi) %>% 
   select( n, N, chi) %>% 
   ggplot( aes( x = chi )) + geom_histogram() + facet_wrap(~n)
+
+
+
+# z <- c(1,10,100,1000)
+
+z <- c(1,4,6)
+list_test <- list();
+for( i in 1:length(z)){
+  print(str_c("Her" , i))
+    x <- rchisq(n = 10, df  = 1, ncp = 0);
+    list_test[str_c("i")][j] = x;
+    print(str_c(i," og ",j))
+  }
+  
+  
+}
+
+
+list_test[1]
 
 
 # 2 -----------------------------------------------------------------------
@@ -178,6 +204,9 @@ tibble( N  = seq(from = 10, to = 4000, by = 1) ,
 
 
 # Exercise 2 -Gen  and linear regression ----------------------------------
+# Estimate the B0, B1 and var(B), var(E)
+
+# Hypotisis-test
 
 # Generate data
 df <- tibble( x = runif(400, min = 0, max = 1), y = 1 + 1*x + rnorm(length(x), 0, 2) )
@@ -186,13 +215,44 @@ df <- tibble( x = runif(400, min = 0, max = 1), y = 1 + 1*x + rnorm(length(x), 0
 df %>% 
   lm(y ~ x, data = .) %>% summary
 
-# Test
+# H_0 = 1 H_A != 1
 df %>% 
-  lm(y ~ 0 + I(1+ x), data = .) %>% summary
+  lm(y ~  I( x), data = .) %>% 
+  tidy() %>% 
+  mutate( p_value = (1- pnorm(estimate - 0)/std.error))
+
+
+
+df_2 <- tibble( index = c(1:10))
+
+df_2 <- df_2 %>% mutate( df = map(index, function(x) { tibble( navn = x, x = runif(400, min = 0, max = 1), y = 1 + 1*x + rnorm(length(x), 0, 2)  )})) 
+                          
+
+
+nested_df <- 
+  df_2 %>% 
+  mutate( model = map(df, function(df) { lm(df$y ~ df$x , data = df)  %>% broom::tidy() %>% filter( term == "df$x" ) })) %>%
+  unnest( model)
+
+# Simulated p-value -> for making Type-1 error, when H0: B1 = 1;  
+nested_df %>% 
+  select(index, term, estimate, std.error) %>% 
+  mutate( t_value = (estimate - 1)/std.error , p_value = 2*pt(-abs(t_value), df = 400-1) ) %>% 
+  summarise( p_value = mean(p_value))
+
+
+
+# Estimate the Prop. of not reject the H0, when H0 is wrong. --------------
+
+# Also known as power.
+
+# Power = 1-k =  1 - Pr(Type 2 error) = 1 - Ø(t_1-alpha - true/se(b))
+nested_df %>% 
+  select(index, term, estimate, std.error) %>% 
+  mutate( power = 1 - pnorm(1.96 - ((estimate-1)/std.error)) ) %>% 
+  summarise( mean_power = mean(power))
 
 
 
 
 
-
-  
