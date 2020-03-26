@@ -115,7 +115,7 @@ caret::confusionMatrix(predict_caret, benefits$ui)
 
 
 # Example lectures -------------------------------------------------------
-
+library(tidyverse)
 priv_insurance <- haven::read_dta("mus14data.dta")
 
 priv_insurance %>% skimr::skim()
@@ -137,7 +137,7 @@ list_models <- list("plm" = lpm, "logit" = logit, probit = probit )
 df_models_fitted <- tibble(
   model = names(list_models),
   models = walk(list_models, function(x) {x}),
-  augment = map(models, function(x) { augment(x, type.predict = "response" )})) %>% 
+  augment = map(models, function(x) {broom::augment(x, type.predict = "response" )})) %>% 
   unnest(augment ) %>% 
   select(model, ins, .fitted ) %>% 
   pivot_longer( names_to = "var", values_to = "value", ins:.fitted) %>% 
@@ -145,7 +145,7 @@ df_models_fitted <- tibble(
   mutate( model  = ifelse(var == "ins", "ins", model))
 
 
-df_models %>% 
+df_models_fitted %>% 
   group_by(model) %>% 
   summarise(
     obs = n(),
@@ -157,6 +157,64 @@ df_models %>%
 
 
 mode_private <- priv_insurance %>%   glm(ins ~hhincome, data = ., family = "binomial")
+
+
+
+
+# Marginal effects --------------------------------------------------------
+
+
+# 
+margin_probit <- margins::margins(probit, data = priv_insurance)
+margin_logit <- margins::margins(logit, data = priv_insurance)
+
+
+margin_probit
+margin_logit
+
+summary(margin_probit)
+summary(margin_logit)
+
+
+# dydx
+
+priv_insurance %>% 
+  mutate( index = row_number()) %>% 
+  left_join()
+
+
+summary(margins::dydx(priv_insurance, logit, "age"))
+
+summary(margins(logit, data = priv_insurance, at = list(age = c(20,40,60))))
+summary(margins(probit, data = priv_insurance, at = list(age = c(20,40,60))))
+
+df_margins <- as_tibble(summary(margins(logit, data = priv_insurance, at = list(age = c(20,40,60)))))
+df_margins_probit <- summary(margins(probit, data = priv_insurance, at = list(age = c(20,40,60)))) %>% as_tibble()
+
+
+df_margins
+df_margins_probit
+
+
+library(margins)
+
+dydx(priv_insurance, logit, "age" ,change = c(20,40))
+
+tibble(margin = margins::dydx(priv_insurance, logit, "age"),
+       index = seq(1:nrow(priv_insurance))) %>% 
+  right_join(priv_insurance %>% 
+               select(age) %>% 
+               mutate( index = row_number())
+             ) %>% 
+  arrange(age) %>% 
+  select(-index) %>% 
+  group_by(age) %>% 
+  summarise( dydx = mean(margin$dydx_age) )
+  
+
+
+
+
 
 priv_insurance %>% 
   ggplot( ) + aes( y = ins, x = hhincome) +
