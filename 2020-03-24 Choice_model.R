@@ -114,6 +114,68 @@ caret::confusionMatrix(predict_caret, benefits$ui)
 
 
 
-# Example class rom -------------------------------------------------------
+# Example lectures -------------------------------------------------------
+
+priv_insurance <- haven::read_dta("mus14data.dta")
+
+priv_insurance %>% skimr::skim()
+
+# modeling
+lpm <- priv_insurance %>% lm( ins ~ retire + age + hstatusg  +hhincome + educyear + married + hisp , data  = .)
+logit <- priv_insurance %>% glm( ins ~ retire + age + hstatusg  +hhincome + educyear + married + hisp , data  = ., family = binomial(link = "logit"))
+probit <- priv_insurance %>% glm( ins ~ retire + age + hstatusg  +hhincome + educyear + married + hisp , data  = ., family = binomial(link = "probit"))
+
+summary(lpm)
+summary(logit)
+summary(probit)
+
+stargazer::stargazer(logit, probit, lpm, type = "text")
+
+#  Descriptive statistic of the models of ins:
+list_models <- list("plm" = lpm, "logit" = logit, probit = probit )
+
+df_models_fitted <- tibble(
+  model = names(list_models),
+  models = walk(list_models, function(x) {x}),
+  augment = map(models, function(x) { augment(x, type.predict = "response" )})) %>% 
+  unnest(augment ) %>% 
+  select(model, ins, .fitted ) %>% 
+  pivot_longer( names_to = "var", values_to = "value", ins:.fitted) %>% 
+  filter( ! (var == "ins" & model %in% c("plm", "logit"))) %>% 
+  mutate( model  = ifelse(var == "ins", "ins", model))
+
+
+df_models %>% 
+  group_by(model) %>% 
+  summarise(
+    obs = n(),
+    mean = mean(value),
+    sd_dev = sd(value),
+    min_value = min(value),
+    max_value = max(value)
+  )
+
+
+mode_private <- priv_insurance %>%   glm(ins ~hhincome, data = ., family = "binomial")
+
+priv_insurance %>% 
+  ggplot( ) + aes( y = ins, x = hhincome) +
+  geom_point(alpha = 0.5, position = position_jitter(w=0, h=0.02))  +
+  geom_smooth( method = "glm", se = F, method.args = list(family = "binomial"), color ="blue") +
+  geom_line(data = augment(mode_private, type.predict = "response"),
+            aes(y = .fitted), color = "red")
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

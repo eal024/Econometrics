@@ -26,7 +26,7 @@ clothing %>%
   lm( sales ~ hoursw + ssize , data = .) %>% 
   augment() %>% 
   mutate( y_hat_2 = .fitted^2) %>% 
-  lm( sales  ~ hoursw + ssize + y_hat_2 , data = .) %>% summary
+  lm( sales  ~ hoursw + ssize  +y_hat_2 , data = .) %>% summary
 
 # Cant reject the H0. Cant reject that the f-form is wrong.
 

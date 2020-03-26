@@ -10,7 +10,7 @@ theme_set(theme_light())
 
 fs::dir_ls("Seminar/RawData")
 
-lalonde <- foreign::read.dta("Seminar/RawData/lalonde.dta")
+ %>% %>% %>% %>% %>% %>% 
 
 lalonde <- lalonde %>% as_tibble()
 
