@@ -132,11 +132,7 @@ consistent_ols_many_df %>%
   aes( x = estimate ) +
   geom_histogram( alpha = 0.6) +
   facet_wrap( ~number_of_rep_data) +
-  geom_viklinen(  )
-lopoi86trfnmbnmjkløæåpiyrewwqaxvbnm,gfdsertyuiopåæ
-4
-othili
-
+  geom_vlinen(  )
 
 
 

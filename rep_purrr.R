@@ -3,7 +3,7 @@
 list_a <- list( a = "Dette er tekst", b = c(1,2,3), c = as_tibble(mtcars), d = NULL)
 
 
-pluck(list_a, 3)
+pluck(list_a, 2)
 
 map(list_a, 1)
 
@@ -15,7 +15,6 @@ discard(list_a, function(x) {is.character(x)})
 compact( list_a)
 
 # Reshape list
-
 flatten(keep(list_a, function(x) {!is.tibble(x)}))
 
 flatten_chr(keep(list_a, function(x) {!is.tibble(x)}))
@@ -36,7 +35,7 @@ reduce(letters[1:3], str_c)
 
 str_c_min <- function(x,y) {str_c(x, sep = " og ", y)}
 
-reduce(letters[1:3], str_c_min)
+reduce(letters[1:5], str_c_min)
 
 accumulate(letters[1:3], str_c_min)
 
@@ -72,6 +71,30 @@ test2 <- list(
 
 
 pmap(test2, function(var_y, var_x, var_c, data) {lm(str_c(var_y,"~",var_x,"+", var_c), data = data) %>% tidy()})
+
+
+
+# compose -----------------------------------------------------------------
+library(broom)
+library(tidyverse)
+
+clean_aov <- compose( tidy, anova, stats::lm )
+
+clean_aov( Sepal.Length ~ Sepal.Width, data = iris)
+
+se <- partial( mean, na.rm  = T)
+
+round_mean <- compose( 
+  partial(round, digits = 2),
+  partial( mean, na.rm = T)
+  )
+
+round_mean( c(c(1:4), c(0.5:9, NA) ))
+
+
+
+
+
 
 
 
