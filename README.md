@@ -2,6 +2,6 @@
 
 Collection of scrips of econometrical topics and examples 
 
-# Difference in difference 
-- [Intro to DiD](https://github.com/eal024/Econometrics/blob/master/intro_did.R) Illustration of a basic Difference-in-Differences (DiD) (in R). The code demonstrates the implementation of DiD models, both in base R and with the `fixest` package, along with an event study.
-- [TWFE](https://github.com/eal024/Econometrics/blob/master/twfe.R) The problem with TWFE (DID):several periods and potential problem with staggered treatment timing. 
+## Difference in difference 
+- [Intro to DiD (2X2)](https://github.com/eal024/Econometrics/blob/master/intro_did.R) Illustration of a basic Difference-in-Differences (DiD) (in R). The code demonstrates the implementation of DiD models, both in base R and with the `fixest` package, along with an event study.
+- [TWFE](https://github.com/eal024/Econometrics/blob/master/twfe.R) The problem with TWFE (DID): Several periods and potential problem with staggered treatment timing. 
