@@ -2,8 +2,6 @@
 
 Collection of scrips of econometical topics and examples 
 
-## The folder Seminar
-The folder named Semiar are exercises and example from the course ECON 4137- Applied Micro Econometrics, at the University of Oslo (spring 2020).
-
-https://www.uio.no/studier/emner/sv/oekonomi/ECON4137/
-
+# Difference in difference 
+- (Intro to DiD)[] Illustration of a basic Difference-in-Differences (DiD) (in R). The code demonstrates the implementation of DiD models, both in base R and with the `fixest` package, along with an event study.
+- (TWFE)[] The problem with TWFE (DID), with several periods and potential problem with staggered treatment timing. 
