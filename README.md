@@ -3,8 +3,9 @@
 Collection of scrips of econometrical topics and examples 
 
 ## OLS
-- [ols in R](https://github.com/eal024/Econometrics/blob/master/ols.R)
-- [Simulate ols properties](https://github.com/eal024/Econometrics/blob/master/ols_properties.R)
+- [OLS in R](https://github.com/eal024/Econometrics/blob/master/ols.R)
+- [Simulate OLS properties](https://github.com/eal024/Econometrics/blob/master/ols_properties.R)
+- [Partial out regression OLS](https://github.com/eal024/Econometrics/blob/master/ols_partial_out_regressors.R)
 
 ## Difference in difference 
 - [Intro to DiD (2X2)](https://github.com/eal024/Econometrics/blob/master/intro_did.R) The basic 2x2 set up. Implementing DiD with `lm()` and with the `fixest` package, and the `felosl()` function. Also, a simple example of the event study setup, using `event()`.
