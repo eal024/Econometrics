@@ -3,10 +3,10 @@
 Collection of scrips of econometrical topics and examples 
 
 ## OLS
-- [OLS in R](https://github.com/eal024/Econometrics/blob/master/OLS/ols.R)
+- OLS in R[lm()](https://github.com/eal024/Econometrics/blob/master/OLS/ols.R), [matrix form]() 
 - [Simulate OLS properties](https://github.com/eal024/Econometrics/blob/master/OLS/ols_properties.R)
 - [Partial out regression OLS](https://github.com/eal024/Econometrics/blob/master/OLS/ols_partial_out_regressors.R)
-- [Standard Errors](https://github.com/eal024/Econometrics/blob/master/OLS/standarderrors.R) Standard and Robust standard errors. Matrix calculation and with function.
+- [Weighted least square](https://github.com/eal024/Econometrics/blob/master/OLS/weightedls.R)
 
 
 ## Difference in difference 
