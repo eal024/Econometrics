@@ -8,6 +8,13 @@ Collection of scrips of econometrical topics and examples
 - [Partial out regression OLS](https://github.com/eal024/Econometrics/blob/master/OLS/ols_partial_out_regressors.R)
 - [Weighted least square](https://github.com/eal024/Econometrics/blob/master/OLS/weightedls.R)
 
+## Standard errors
+- [OLS standard errors, in matrix form]()
+
+### Bootstrap 
+-[example 1 (non paramteric)](https://github.com/eal024/Econometrics/blob/master/bootstrap_example1.R)
+-[example 2(`lapply()` and the `boot()` library)]()
+
 
 ## Difference in difference 
 - [Intro to DiD (2X2)](https://github.com/eal024/Econometrics/blob/master/intro_did.R) The basic 2x2 set up. Implementing DiD with `lm()` and with the `fixest` package, and the `felosl()` function. Also, a simple example of the event study setup, using `event()`.
