@@ -15,8 +15,8 @@ Collection of scrips of econometrical topics and examples
 - [OLS standard errors, in matrix form]()
 
 ### Bootstrap 
-- [example 1](https://github.com/eal024/Econometrics/blob/master/ bootstrap_example1.R) non paramteric and the `replicate()` function.
-- [example 2]()`lapply()` and the `boot()` packages.
+- [example 1](https://github.com/eal024/Econometrics/blob/master/bootstrap_example1.R) non paramteric and the `replicate()` function.
+- [example 2]() the `lapply()` function and `boot()` packages.
 
 
 ## Difference in difference 
