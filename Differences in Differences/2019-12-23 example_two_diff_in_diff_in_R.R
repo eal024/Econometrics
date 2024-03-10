@@ -5,7 +5,7 @@ eitc <- haven::read_dta(here::here("differences in Differences/eitc.dta"))
 
 
 # The effect of eitc: "..The EITC thus benefits low-income Americans in both rural and urban counties. The impact on poverty is far greater 
-  #   on workers with children than on those without."
+#   on workers with children than on those without."
 
 eitc <- eitc %>% as_tibble()
 
@@ -24,13 +24,10 @@ eitc_w_treat %>%
   sample_n( 15) %>% 
   head( n = 15)
 
-
 # The model: work = β0+ δ0post93 + β1anykids + δ1(anykids×post93) +ε.
 # The model: work = β0+ δ0post93 + β1anykids + δ1did +ε.
 
 # DID: Estimate have the EITC have work, after treatment
-
-
 eitc_w_treat %>% lm( work ~ post93 + anykids + did, data = .) %>% summary
 
 # The EITC has in an positive effect on the probability for the ind. to work. 5 %

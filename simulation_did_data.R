@@ -71,3 +71,8 @@ xyplot(
   ylab = "Y", xlab = "Time variable",
   data = dat
   )
+
+
+dat
+
+# 
