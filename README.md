@@ -22,9 +22,9 @@ Collection of scrips of econometrical topics and examples
 - [example 3]() seminar case - sample, beta and percentile and the t-percentile method. compare with ML estimate. 
 
 ## Non-parametric methods
-- [Manually calculated](https://github.com/eal024/Econometrics/blob/master/Nonparametric/histogram_density_manually_calculation.xlsx)
-- [The histogram](https://github.com/eal024/Econometrics/blob/master/Nonparametric/histogram.R)
-- [Local linear regression, Nadaraya Watson](https://github.com/eal024/Econometrics/blob/master/Nonparametric/local_linear_regression.R)
+- [Manually calculated](https://github.com/eal024/Econometrics/blob/master/Nonparametric/histogram_density_manually_calculation.xlsx) Histogram and Nonparametric regression calculated in Excel.
+- [The histogram](https://github.com/eal024/Econometrics/blob/master/Nonparametric/histogram.R): Implementing calculation of the histogram with Non param. Example based on a small dataset and Epanechnikov Kernel.
+- [Local linear regression, Nadaraya Watson](https://github.com/eal024/Econometrics/blob/master/Nonparametric/local_linear_regression.R) The calucation in [Excel](https://github.com/eal024/Econometrics/blob/master/Nonparametric/histogram_density_manually_calculation.xlsx) translated in to general `function()` `s in R. 
 
 
 ## Difference in difference 
