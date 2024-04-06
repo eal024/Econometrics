@@ -33,3 +33,9 @@ Collection of scrips of econometrical topics and examples
 - [TWFE](https://github.com/eal024/Econometrics/blob/master/twfe.R)  Demonstrate the problem with TWFE (DID) -- staggered treatment. Treatment at different times and with different effects. 
 - [The Goodman Bacon decomposition of the TWFE-estimate](https://github.com/eal024/Econometrics/blob/master/goodmanbacon_decomposition.R)
 - [TWFE](https://github.com/eal024/Econometrics/blob/master/twfe.R)  Demonstrate the problem with TWFE (DID) -- staggered treatment. Treatment at different times and with different effects. 
+
+
+## Matching
+- [Exact matching:]() 1:1 matching, based on covariats.
+- []()
+- [Propensity Score]() Example from LaLonda (1989), from [Mixtape](https://mixtape.scunning.com/05-matching_and_subclassification)
