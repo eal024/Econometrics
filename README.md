@@ -38,4 +38,4 @@ Collection of scrips of econometrical topics and examples
 ## Matching
 - [Exact matching:]() 1:1 matching, based on covariats.
 - []()
-- [Propensity Score]() Example from LaLonda (1989), from [Mixtape](https://mixtape.scunning.com/05-matching_and_subclassification)
+- [Propensity Score](https://github.com/eal024/Econometrics/blob/master/Matching/2024-04-06%20example1_propensityscore.R) Example from LaLonda (1989), from [the Mixtape](https://mixtape.scunning.com/05-matching_and_subclassification). Using `glm()` and the maximum likehood estimator and testing the [`tidymodels packages`](https://github.com/eal024/Econometrics/blob/master/Matching/2024-04-06%20logistic_reg_glm_and_tidymodels.R)
