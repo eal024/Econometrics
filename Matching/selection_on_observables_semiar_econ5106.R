@@ -14,7 +14,6 @@ data <- tibble(
 
 
 # a) Estimate the causal effect of T, linear regression
-
 summary(lm( data = data, y ~ x + d))
 
 # Assumtion of d to be causal
@@ -22,7 +21,6 @@ summary(lm( data = data, y ~ x + d))
 # x is exogen to d 
 
 # b) Exact matching
-
 data_b <- data |> 
     # For calcualte, need x to both be for d = 1 and d = 0
     mutate(
