@@ -12,6 +12,7 @@ df <- haven::read_dta( paste(path_data, "nsw_mixtape.dta", sep = "") )  # The ra
 # Balanced properites
 df |> group_by(treat) |> summarise_all(mean)
 
+# For reuse of the data transformation
 fn_transform <- function(dat){
     dat |> 
         mutate(
@@ -28,47 +29,50 @@ fn_transform <- function(dat){
         )
 }
 
-#
+# Transform varibales
 df <- fn_transform(df)    
 
-#
-names(df)
+# First OLS regrression
 xvars <- c("age" ,"age2", "educ" , "educ2", "black", "hisp", "marr", "nodegree", "re74", "re75")
 
 model1 <- feols( data = df, fml = as.formula("re78 ~ treat"))
 model2 <- feols( data = df, fml = as.formula( paste0( "re78 ~ treat +", paste(xvars, collapse = " + ") ) ) )
 
-esttable( list(model1, model2))
+esttable( list(model1, model2)) # The effect from the program is round  1 795$. The result is based on randomized data.
 
-
+# How does the result get effected by using popualtion as controls`?`
 # 2. controlgrop from Current Population Survey (CPS).
 # It is very important to stress that while the treatment group is an experimental group, the control group now consists of a random sample of Americans from that time period.
 
 df2 <- haven::read_dta( paste(path_data,"cps_mixtape.dta", sep = "") )
 
-# Join data with NSW
+# data joining: data with NSW
 # Keeping only treated from the NSW-data
-df3  <- bind_rows(
-    df |> filter( treat == 1),
-    df2 
-    ) |>
-    fn_transform()
+df3  <- 
+    # Bind data
+    bind_rows(
+        df |> filter( treat == 1), # NSW
+        df2 # CPS
+        ) |>
+        fn_transform() # Transfrom data
 
-# Estimating the PS-model
+# First estimating the PS-model:
 xvars     <- c("age" ,"age2","age3" ,"educ" , "educ2", "marr", "nodegree","black", "hisp", "re74", "re75", "re74_2", "re75_2","interaction1", "interaction2")
 string_fm <- paste("treat ~", paste(xvars, collapse = " + ") )
 logit <- glm( data = df3,  formula = as.formula(string_fm), family = binomial( link = "logit") )
+
 summary(logit)
 
+# Look how well the model predict
 pred <- predict(logit,  type  = "response")
 thh <- 0.5
 est <- ifelse( pred > thh, 1, 0)
 test <- tibble( treat = df3$treat, pscore = pred, est =  est)
 
 # Telling how wel the model predicts
-# Accuracy heigh
-caret::confusionMatrix(as.factor(est), as.factor(df3$treat) )
+caret::confusionMatrix(as.factor(est), as.factor(df3$treat) )# Accuracy heigh
 
+# Testing assumption about CS:
 # Pscore by group: treatment group has higher Pr. for being treated.
 test |> group_by(treat) |> summarise( pscore = mean(pscore))
 
@@ -91,7 +95,7 @@ ggplot(
 #  What this means is that the characteristics of individuals in the treatment group are rare in the CPS sample.
 #  This is not surprising given the strong negative selection into treatment.
 
-# 
+# 2) Non normalized mean (effect) and normalized
 N <- nrow(df3)
 df3$pscore <- pred
 
@@ -135,8 +139,9 @@ df6 <- df3 |>
 mean(df5$ht)
 mean(df6$norm)
 
-
-# Trimming the data
+## The result is far from randomized data.
+# Because the CS dont holds. 
+# Trimming the data: The CS become satizf.
 df7 <- df4 |>
     mutate( re78 = df3$re78) |> 
     filter( 
@@ -160,7 +165,10 @@ df8 <- df7 |>
         norm = ny1 - ny0
         )
 
+# Closer to the real effect
 mean(df8$ht)
 mean(df8$norm )
 
-## Nearest neighbor matching on the PS-
+
+
+## Example 2: Nearest neighbor matching on the PS
