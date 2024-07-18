@@ -194,6 +194,31 @@ ggplot() +
         )   +
         ylim( c(0, .2))
 
+dat1 |>
+    filter( union == 0) |>
+    mutate( w_lwage = lwage*weight) |>
+    summarise( 
+        m = sum(w_lwage, na.rm = T)/sum(weight,na.rm =T ))
+
+## Alternative
+dat_df4 <- dat1 |> 
+    select( y = lwage, treat = union, pscore = p) |> 
+    mutate( 
+        d1 = treat/pscore,
+        d0 = (1-treat)/(1-pscore)
+        )
+    
+dat_df5 <- dat_df4 |> 
+    group_by(i = 1:n(), treat) |> 
+    transmute(
+        y1 = treat*y/pscore,
+        y0 = (1-treat)*y/(1-pscore),
+        ht = y1 - y0
+    ) |> 
+    ungroup()
+
+mean(dat_df5$ht, na.rm = T)
+
 
 # Example 3 -----------------------------
 

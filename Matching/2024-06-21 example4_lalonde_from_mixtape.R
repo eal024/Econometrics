@@ -132,7 +132,7 @@ df6 <- df3 |>
     group_by(i = 1:n(), treat) |> 
     transmute(
         y1 = (treat*re78/pscore)/(s1/N),
-        y0 = (re78*(1-treat)/(1-pscore))*(s0/N),
+        y0 = (re78*(1-treat)/(1-pscore))/(s0/N),
         norm = y1 - y0
     )
 
