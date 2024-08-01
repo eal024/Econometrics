@@ -14,7 +14,7 @@ Collection of scrips of econometrical topics and examples
 - [Weighted least seqare](https://github.com/eal024/Econometrics/blob/master/OLS/wls.R)
 
 ### Instrument variable regression (IV)
-- IV with homogenous treatment effect:[Simple illustration](), [the Wald estimate](),[Structur and reduced form eqations](). 
+- IV with homogenous treatment effect: [Simple illustration](), [the Wald estimate](),[Structur and reduced form eqations]()
 - [Example 1:]() Seminar exercise ECON 4137 UiO
 
 - [IV with hetrogenous treatment effect:]()
