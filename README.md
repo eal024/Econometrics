@@ -14,11 +14,12 @@ Collection of scrips of econometrical topics and examples
 - [Weighted least seqare](https://github.com/eal024/Econometrics/blob/master/OLS/wls.R)
 
 ### Instrument variable regression (IV)
-- IV with homogenous treatment effect: [Simple illustration](), [the Wald estimate](),[Structur and reduced form eqations]()
+#### IV with homogenous treatment effect
+- [The simple illustration](), [the Wald estimate](), and the [Structur and reduced form eqations]()
 - [Example 1:]() Seminar exercise ECON 4137 UiO
 
-- [IV with hetrogenous treatment effect:]()
-- [Example 1:]() How is the mothers labor supply affected by number of children (IV: Two children with the same sex, and/ar twins as IV)?
+#### [IV with heterogeneous treatment effect:]()
+- [Example 1:]() How is the mother's labor supply affected by the number of children (IV: Two children of the same sex, and twins as IV)?
 - [Example 2:]()
 - [Example 3:]()
 - [Example 4:]()
@@ -34,7 +35,7 @@ Collection of scrips of econometrical topics and examples
 - [The empirical CDF]()
 - [example 1](https://github.com/eal024/Econometrics/blob/master/bootstrap_example1.R) non-paramteric and the `replicate()` function.
 - [example 2]() the `lapply()` function and `boot()` packages.
-- [example 3]() seminar case - sample, beta and percentile and the t-percentile method. compare with ML estimate. 
+- [example 3]() seminar case - sample, beta, percentile, and t-percentile method. compare with ML estimate. 
 
 ## Non-parametric methods
 - [Manually calculated](https://github.com/eal024/Econometrics/blob/master/Nonparametric/histogram_density_manually_calculation.xlsx) Histogram and Nonparametric regression calculated in Excel.
