@@ -106,8 +106,8 @@ yn0  <- mean(dt$lnw[dt$d == 0 & dt$z == 1]) # Nevertakers
 y0c  <- y00*(pc+pn)*(1/pc) - yn0*pn*(1/pc) 
 
 # Y[1c] = { Y[1]*(pc+pa) - Y[1a]*pa }*(1/pc)
-y11  <- mean(dt$lnw[dt$d == 1 & dt$z == 1]) # Always takers
-ya1  <- mean(dt$lnw[dt$d == 1 & dt$z == 0])
+y11  <- mean(dt$lnw[dt$d == 1 & dt$z == 1]) 
+ya1  <- mean(dt$lnw[dt$d == 1 & dt$z == 0]) # Always takers
 y1c  <- y11*(pc+pa)*(1/pc) - ya1*pa*(1/pc)
 
 LATE <- y1c - y0c
@@ -136,21 +136,72 @@ esttable( list(modely0c, modely1c)) # LATE is yc1- yc0
 dens_a <- density(dt$lnw[dt$d == 1 & dt$z == 0]) # Always takers
 dens_n <- density(dt$lnw[dt$d == 0 & dt$z == 1]) # Never takers
 
-
-y00  <- mean(dt$lnw[dt$d == 0 & dt$z == 0])
-yn0  <- mean(dt$lnw[dt$d == 0 & dt$z == 1]) # Nevertakers
-y0c  <- y00*(pc+pn)*(1/pc) - yn0*pn*(1/pc) 
-
-std_dev <- sd(dt$lnw[dt$d == 0 & dt$z == 0])  # Standard deviation from the group with no treatment
-# Generate synthetic data assuming a normal distribution
-set.seed(123)  # For reproducibility
-synthetic_data_y0c <- rnorm(1000, mean = y0c, sd = std_dev)
-dens_c0 = density(synthetic_data_y0c)
-std_dev <- sd(dt$lnw[dt$d == 1 & dt$z == 1])  # Standard deviation from the group with no treatment
-
 plot( dens_a, col = "red", ylim = c(0,2) )
 lines( dens_n, col = "blue")
-lines( dens_c0, col = "orange")
-legend( "topright", legend = c("Always takers", "NT", "y0c"), col = c("red", "blue", "orange"), lwd = 2)
+legend( "topright", legend = c("Always takers", "NT") , col = c("red", "blue"), lwd = 2)
 
 
+ya <- dt$lnw[dt$d == 1 & dt$z == 0]
+yn <- dt$lnw[dt$d == 0 & dt$z == 1]
+
+#
+dt_plot <- data.table( 
+    value = c( ya, yn),
+    kat   = c( rep("A", times = length(ya)), rep("N", times = length(yn)) )
+)
+
+## The plot
+tinyplot::tinyplot( type = "density", data = dt_plot, ~value|kat, main = "densiyt ya and yn" )
+
+
+## Density plot for yc1 and yc0
+
+# Generate densities for the relevant subgroups
+density_d1_z1 <- density(dt$lnw[dt$d == 1 & dt$z == 1])  # Compliers + Always-takers
+density_d1_z0 <- density(dt$lnw[dt$d == 1 & dt$z == 0])  # Always-takers
+density_d0_z0 <- density(dt$lnw[dt$d == 0 & dt$z == 0])  # Never-takers
+
+# Ensure the densities are evaluated at the same points
+x_vals <- density_d1_z1$x
+g1c <- approx(density_d1_z1$x, density_d1_z1$y, x_vals)$y
+f1a <- approx(density_d1_z0$x, density_d1_z0$y, x_vals)$y
+
+# Calculate the density for compliers (f1c)
+f1c <- g1c* (pc + pa) / pc - f1a * pa / pc
+
+
+
+# Adding the y0c
+density_d0_z0 <- density(dt$lnw[dt$d == 0 & dt$z == 0])  # Never takers + compliers
+density_d0_z1 <- density(dt$lnw[dt$d == 0 & dt$z == 1])  # Never takers
+g0c <- approx(density_d0_z0$x, density_d0_z0$y, x_vals)$y
+f0n <- approx(density_d0_z1$x, density_d0_z1$y, x_vals)$y
+
+# Calculate the density for compliers (f1c)
+f0c <- g0c * (pc + pn) / pc - f0n * pn / pc
+
+# Plot the densities
+# 1) the density for the yc1
+plot(
+    x_vals, 
+    f1c,
+    type = "l",
+    col = "red",
+    lwd = 2,
+    ylim = c(0, max(f1a, na.rm = T) + 1), 
+    ylab = "Density", xlab = "lnw", main = "Density Plot of Y1 for Compliers"
+    )
+# Adding the vertical line for mean 
+abline( v = y1c, col = "black", lnw = 2, lty = 2) 
+# 2) The yc0 in the same plot:
+lines( x_vals, f0c, lnw = 2, col = "darkgreen")
+abline( v = y0c, col = "darkgreen", lty = 1, lnw = 2)
+
+
+fn_normalize <- function(d){ d/max(d,na.rm= T) }
+
+n_f1c <- fn_normalize(d = f1c)
+n_f0c <- fn_normalize(d = f0c)
+
+plot(x_vals, n_f1c, type = "l", col = "red", lwd = 2)
+lines(x_vals, n_f0c)
