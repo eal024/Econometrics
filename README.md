@@ -23,6 +23,7 @@ Collection of scrips of econometrical topics and examples
 - [Example 2:]()
 - [Example 3:]()
 - [Example 4:]()
+- The [Hausmans test of endogenous X]()
 
 ### Inference and more on Standard errors  
 
