@@ -13,6 +13,9 @@ Collection of scrips of econometrical topics and examples
 - [Partial out regression OLS](https://github.com/eal024/Econometrics/blob/master/OLS/ols_partial_out_regressors.R)
 - [Weighted least seqare](https://github.com/eal024/Econometrics/blob/master/OLS/wls.R)
 
+##### Spesification and interpretation  
+- 
+
 ### Instrument variable regression (IV)
 #### IV with homogenous treatment effect
 - [The simple illustration](), [the Wald estimate](), and the [Structur and reduced form eqations]()
