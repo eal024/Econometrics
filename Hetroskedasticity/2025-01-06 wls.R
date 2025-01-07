@@ -39,15 +39,3 @@ stargazer::stargazer(
 
 # In practice, for other types of datasets, the structure of W is usually unknown, so we have to perform an ordinary least squares (OLS) regression first.
 
-# Example two created data:
-N <- 100
-x <- seq(0, 10, length.out = N) + rnorm( n = N, mean = 2, sd = 1)
-error <- rnorm( n = length(x), mean = 0, sd = 4)
-y <- 4 + 2*x + error
-
-tbl <- tibble( y = y, x = x)        
-summary( model <- lm( data = tbl, y ~ x ) )  # The model
-plot( x, y, main = "scatter plot")  # plot
-abline( model, col = "red", lwd = 2)
-
-
