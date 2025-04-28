@@ -1,0 +1,4 @@
+- source: page.qmd
+  quarto-pub:
+    - id: ec3966b4-556e-4839-a1f7-36c5c67ca3fd
+      url: 'https://eirikala.quarto.pub/test'
